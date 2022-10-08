@@ -8,36 +8,123 @@ import { BsTrash } from "react-icons/bs";
 import { BsDot } from "react-icons/bs";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { HiOutlinePencil } from "react-icons/hi";
+import { IoIosClose } from "react-icons/io";
 
 const Item = () => {
   return (
     <>
       <div className="container">
         <div className="row">
-          <div className="col-4">
+          <div className="col-3" data-cy="todo-back-button">
             <MdOutlineKeyboardArrowLeft
               style={{
                 position: "absolute",
+                width: "32px",
+                height: "32px",
                 bottom: "500px",
-                left: "18%",
-                top: "14.5%",
-                right: "54.17%",
+                left: "209px",
+                top: "159px",
               }}
               size="50px"
               color="black"
             />
           </div>
-          <div className="col-4">
-            <h1 className="todo-title"> New Activity</h1>
+          <div className="col-3">
+            <h1
+              className="todo-title"
+              style={{
+                position: "absolute",
+                height: "54px",
+                width: "430px",
+                left: "245px",
+                top: "148px",
+                fontFamily: "Poppins",
+                fontStyle: "normal",
+                fontWeight: "700",
+                fontSize: "36px",
+                lineHeight: "54px",
+                /* identical to box height */
+
+                color: "#111111",
+              }}
+            >
+              {" "}
+              Daftar Belanja Bulanan
+            </h1>
           </div>
-          <div className="col-4">
+          <div className="col-3">
+            <button
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "center",
+                alignItems: "center",
+                padding: "13px 21px 13px 14px",
+                gap: "6px",
+                position: "absolute",
+                width: "159px",
+                height: "54px",
+                left: "1061px",
+                top: "154px",
+                background: "#16ABF8",
+                borderRadius: "45px",
+
+                /* identical to box height */
+
+                color: "#111111",
+              }}
+              type="button"
+              class="btn btn-primary"
+              data-cy="activity-add-button"
+            >
+              <AiOutlinePlus
+                style={{
+                  position: "absolute",
+                  width: "24px",
+                  height: "24px",
+                  flex: "none",
+                  left: "10px",
+                  top: "12px",
+                  order: "0",
+                  color: "#FFFFFF",
+                  flexGrow: "0",
+                }}
+              />
+              <h5
+                data-cy="Tambah"
+                style={{
+                  position: "absolute",
+                  width: "78px",
+                  height: "27px",
+                  left: "40px",
+                  top: "12px",
+                  fontFamily: "Poppins",
+                  fontStyle: "normal",
+                  fontWeight: "600",
+                  fontSize: "18px",
+                  lineHeight: "27px",
+                  /* identical to box height */
+                  textAlign: "center",
+                  color: "#FFFFFF",
+                  flex: "none",
+                  order: "1",
+                  flexGrow: "0",
+                }}
+              >
+                {" "}
+                Tambah
+              </h5>
+            </button>
+          </div>
+          <div className="col-3" data-cy="todo-title-edit-button">
             <HiOutlinePencil
               style={{
                 position: "absolute",
-                bottom: "500px",
-                left: "32%",
-                top: "15.75%",
-                right: "54.17%",
+                width: "24px",
+                height: "24px",
+
+                left: "690px",
+                top: "164px",
               }}
               size="20px"
               color="black"
@@ -45,87 +132,103 @@ const Item = () => {
           </div>
         </div>
 
-        <button type="button" className=" btn btn-primary tambah">
-          <AiOutlinePlus />
-          Tambah
-        </button>
         <div className="container">
           <div className="row">
-            <div className="col-12">
-              <div
-                className="card"
-                style={{
-                  height: "100px",
-                  width: "auto",
-                  left: "auto",
-                  top: "150px",
-                  boxShadow: "0px 6px 10px rgba(0, 0, 0, 0.1)",
-                  borderRadius: "12px",
-                }}
-              >
-                <div className="card-body">
-                  <div className="row">
-                    <div className="col-3">
-                      <div class="form-check todo-item-checkbox">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          value=""
-                          id="flexCheckDefault"
-                        />
-                        <span>
-                          <BsDot
-                            style={{
-                              position: "absolute",
-                              top: "10px",
-                              right: "auto",
-                              left: "30px",
-                            }}
-                            size="35px"
-                            color="red"
-                          />
-                        </span>
-                      </div>
-                    </div>
+            <div
+              class="card"
+              style={{
+                height: "80px",
+                width: "1000px",
+                left: "100px",
+                top: "200px",
+              }}
+            >
+              <div className="row">
+                <div className="col-3">
+                  <input
+                    style={{
+                      boxSizing: "border-box",
+                      position: "absolute",
+                      height: "20px",
+                      width: "20px",
+                      left: "24px",
+                      top: "25px",
+                      background: "#FFFFFF",
+                      border: "1px solid #C7C7C7",
+                    }}
+                    class="form-check-input mt-0"
+                    type="checkbox"
+                    value=""
+                    aria-label="Checkbox for following text input"
+                  />
+                </div>
+                <div className="col-3">
+                  <BsDot
+                    data-cy="todo-item-priority-indicator"
+                    style={{
+                      position: "absolute",
+                      height: "9px",
+                      width: "9px",
+                      left: "60px",
+                      top: "29px",
+                      background: "#ED4C5C",
+                    }}
+                  />
+                </div>
+                <div className="col-3">
+                  <h1
+                    className="todo-title"
+                    style={{
+                      position: "absolute",
+                      width: "110px",
+                      height: "27px",
+                      left: "85px",
+                      top: "23px",
+                      fontFamily: "Poppins",
+                      fontStyle: "normal",
+                      fontWeight: "500",
+                      fontSize: "18px",
+                      lineHeight: "27px",
+                      /* identical to box height */
 
-                    <div className="col-3">
-                      <label
-                        class="todo-item-title"
-                        style={{
-                          height: "27px",
-                          width: "200px",
-                          left: "215px",
-                          top: "282px",
-                          fontFamily: "Poppins",
-                          fontStyle: "normal",
-                          fontWeight: " 500",
-                          fontSize: "18px",
-                          lineHeight: "27px",
-                          textAlign: "left",
-                          /* identical to box height */
+                      color: "#111111",
+                    }}
+                  >
+                    {" "}
+                    Telur Ayam
+                  </h1>
+                </div>
+                <div className="col-3" data-cy="todo-item-edit-button">
+                  <HiOutlinePencil
+                    style={{
+                      position: "absolute",
+                      width: "20px",
+                      height: "20px",
 
-                          color: "#111111",
-                        }}
-                        for="flexCheckDefault"
-                      >
-                        Default checkbox
-                      </label>
-                      <span>
-                        <BsTrash
-                          style={{
-                            position: "absolute",
-                            top: "20px",
-                            right: "20px",
-                          }}
-                          size="40px"
-                        />
-                      </span>
-                    </div>
-                  </div>
+                      left: "200px",
+                      top: "28px",
+                    }}
+                    size="20px"
+                    color="black"
+                  />
+                </div>
+                <div className="col-3" data-cy="todo-item-delete-button">
+                  <BsTrash
+                    style={{
+                      position: "absolute",
+                      width: "24px",
+                      height: "24px",
+
+                      left: "970px",
+                      top: "30px",
+                    }}
+                  />
                 </div>
               </div>
             </div>
           </div>
+          
+          
         </div>
       </div>
     </>
