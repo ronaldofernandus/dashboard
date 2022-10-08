@@ -7,7 +7,7 @@ import Navbar from "../components/Navbar";
 import Dashboard from "./Dashboard/Dashboard";
 import Item from "./Item/Item";
 import Add from "./Add/add";
-// import Succes from "./Succes/index";
+import AddActivity from "./AddActivity/AddActivity";
 
 function MainPageAfterLogin() {
   return (
@@ -19,6 +19,10 @@ function MainPageAfterLogin() {
 
           <Route path="/item" element={<Item></Item>}></Route>
           <Route path="/add" element={<Add></Add>}></Route>
+          <Route
+            path="/AddActivity"
+            element={<AddActivity></AddActivity>}
+          ></Route>
 
           {/* <Route path="order">
             <Route path="" element={<Order></Order>}></Route>
