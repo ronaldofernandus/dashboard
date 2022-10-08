@@ -6,56 +6,44 @@ import { BsArrowLeftShort } from "react-icons/bs";
 import { BsPencil } from "react-icons/bs";
 import { BsTrash } from "react-icons/bs";
 import { BsDot } from "react-icons/bs";
-import { MdCheckBoxOutlineBlank } from "react-icons/md";
+import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
+import { HiOutlinePencil } from "react-icons/hi";
 
 const Item = () => {
   return (
     <>
       <div className="container">
-        <svg
-          style={{
-            width: "32",
-            height: "32",
-            left: "200",
-            top: "10000",
-          }}
-          viewBox="0 0 32 32"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M6.6665 16L14.6665 24"
-            stroke="#111111"
-            stroke-width="5"
-            stroke-linecap="square"
-          />
-          <path
-            d="M6.6665 16L14.6665 8"
-            stroke="#111111"
-            stroke-width="5"
-            stroke-linecap="square"
-          />
-        </svg>
-
-        <h1 className="todo-title"> New Activity</h1>
-        <svg
-          width="18"
-          height="18"
-          positition="absolute"
-          left="40px"
-          top="40px"
-          viewBox="0 0 18 18"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M1 16.9998H5L15.5 6.49981C16.0304 5.96938 16.3284 5.24996 16.3284 4.49981C16.3284 3.74967 16.0304 3.03025 15.5 2.49981C14.9696 1.96938 14.2501 1.67139 13.5 1.67139C12.7499 1.67139 12.0304 1.96938 11.5 2.49981L1 12.9998V16.9998Z"
-            stroke="#A4A4A4"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-          />
-        </svg>
+        <div className="row">
+          <div className="col-4">
+            <MdOutlineKeyboardArrowLeft
+              style={{
+                position: "absolute",
+                bottom: "500px",
+                left: "18%",
+                top: "14.5%",
+                right: "54.17%",
+              }}
+              size="50px"
+              color="black"
+            />
+          </div>
+          <div className="col-4">
+            <h1 className="todo-title"> New Activity</h1>
+          </div>
+          <div className="col-4">
+            <HiOutlinePencil
+              style={{
+                position: "absolute",
+                bottom: "500px",
+                left: "32%",
+                top: "15.75%",
+                right: "54.17%",
+              }}
+              size="20px"
+              color="black"
+            />
+          </div>
+        </div>
 
         <button type="button" className=" btn btn-primary tambah">
           <AiOutlinePlus />
@@ -76,39 +64,44 @@ const Item = () => {
                 }}
               >
                 <div className="card-body">
-                  <div class="form-check todo-item-checkbox">
-                    <input
-                      class="form-check-input"
-                      type="checkbox"
-                      value=""
-                      id="flexCheckDefault"
-                    />
+                  <div className="row">
+                    <div className="col-3">
+                      <div class="form-check todo-item-checkbox">
+                        <input
+                          class="form-check-input"
+                          type="checkbox"
+                          value=""
+                          id="flexCheckDefault"
+                        />
+                        <span>
+                          <BsDot
+                            style={{
+                              position: "absolute",
+                              top: "10px",
+                              right: "auto",
+                              left: "30px",
+                            }}
+                            size="35px"
+                            color="red"
+                          />
+                        </span>
+                      </div>
+                    </div>
 
-                    <span>
-                      <BsDot
-                        style={{
-                          position: "absolute",
-                          top: "10px",
-                          right: "auto",
-                          left: "30px",
-                        }}
-                        size="35px"
-                        color="red"
-                      />
-                    </span>
-                    <span>
+                    <div className="col-3">
                       <label
                         class="todo-item-title"
                         style={{
                           height: "27px",
-                          width: "auto",
-                          
+                          width: "200px",
+                          left: "215px",
                           top: "282px",
                           fontFamily: "Poppins",
                           fontStyle: "normal",
                           fontWeight: " 500",
                           fontSize: "18px",
                           lineHeight: "27px",
+                          textAlign: "left",
                           /* identical to box height */
 
                           color: "#111111",
@@ -117,17 +110,17 @@ const Item = () => {
                       >
                         Default checkbox
                       </label>
-                    </span>
-                    <span>
-                      <BsTrash
-                        style={{
-                          position: "absolute",
-                          top: "20px",
-                          right: "20px",
-                        }}
-                        size="40px"
-                      />
-                    </span>
+                      <span>
+                        <BsTrash
+                          style={{
+                            position: "absolute",
+                            top: "20px",
+                            right: "20px",
+                          }}
+                          size="40px"
+                        />
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>

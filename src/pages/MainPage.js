@@ -6,6 +6,7 @@ import Navbar from "../components/Navbar";
 // import DetailProduct from "./Product/DetailProduct";
 import Dashboard from "./Dashboard/Dashboard";
 import Item from "./Item/Item";
+import Add from "./Add/add";
 // import Succes from "./Succes/index";
 
 function MainPageAfterLogin() {
@@ -17,6 +18,7 @@ function MainPageAfterLogin() {
           <Route path="" element={<Dashboard></Dashboard>}></Route>
 
           <Route path="/item" element={<Item></Item>}></Route>
+          <Route path="/add" element={<Add></Add>}></Route>
 
           {/* <Route path="order">
             <Route path="" element={<Order></Order>}></Route>
