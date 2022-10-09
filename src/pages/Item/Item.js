@@ -12,10 +12,15 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { getDetailDashboardById } from "../../Axios/dashboardAxios";
-import { getListAllItem } from "../../Axios/ItemAxios";
+import { getListAllItem, deleteItem } from "../../Axios/ItemAxios";
+import Swal from "sweetalert2";
 const Item = () => {
-  const { getListItemResult, getListItemLoading, getListItemError } =
-    useSelector((state) => state.itemReducers);
+  const {
+    getListItemResult,
+    getListItemLoading,
+    getListItemError,
+    DeleteListItem,
+  } = useSelector((state) => state.itemReducers);
   const { getDetailDashboardResult } = useSelector(
     (state) => state.dashboardReducers
   );
@@ -34,23 +39,44 @@ const Item = () => {
   useEffect(() => {
     dispatch(getListAllItem(+id));
   }, [dispatch]);
+
+  const deleteHandler = (id) => {
+    // console.log("1. Mulai");
+    dispatch(deleteItem(id));
+    Swal.fire({
+      icon: "success",
+      title: "Delete Success!",
+      text: `You've successfully Delete an post!`,
+    });
+    navigate("/item");
+  };
+
+  useEffect(() => {
+    if (DeleteListItem) {
+      // console.log("5. Masukk Component did update");
+      dispatch(getListAllItem());
+    }
+  }, [DeleteListItem, dispatch]);
+
   return (
     <>
       <div className="container">
         <div className="row">
           <div className="col-3" data-cy="todo-back-button">
-            <MdOutlineKeyboardArrowLeft
-              style={{
-                position: "absolute",
-                width: "32px",
-                height: "32px",
-                bottom: "500px",
-                left: "209px",
-                top: "159px",
-              }}
-              size="50px"
-              color="black"
-            />
+            <Link to={`/`}>
+              <MdOutlineKeyboardArrowLeft
+                style={{
+                  position: "absolute",
+                  width: "32px",
+                  height: "32px",
+                  bottom: "500px",
+                  left: "209px",
+                  top: "159px",
+                }}
+                size="50px"
+                color="black"
+              />
+            </Link>
           </div>
           <div className="col-3">
             <h1
@@ -162,8 +188,6 @@ const Item = () => {
           <div className="row">
             {getListItemResult ? (
               getListItemResult.data.map((item) => {
-                console.log(getListItemResult);
-                // console.log(getListJobsResult);
                 return (
                   <>
                     {" "}
@@ -250,6 +274,7 @@ const Item = () => {
                           data-cy="todo-item-delete-button"
                         >
                           <BsTrash
+                            onClick={() => deleteHandler(item.id)}
                             style={{
                               position: "absolute",
                               width: "24px",

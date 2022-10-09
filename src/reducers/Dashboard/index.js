@@ -1,6 +1,8 @@
 import {
   getListDashboard,
   getDetailDashboard,
+  AddListDashboard,
+  DeleteListDashboard,
 } from "../../Axios/dashboardAxios";
 const initialState = {
   getListDashboardResult: false,
@@ -10,6 +12,14 @@ const initialState = {
   getDetailDashboardResult: false,
   getDetailDashboardLoading: false,
   getDetailDashboardError: false,
+
+  AddListDashboardResult: false,
+  AddListDashboardLoading: false,
+  AddListDashboardError: false,
+
+  DeleteListDashboardResult: false,
+  DeleteListDashboardLoading: false,
+  DeleteListDashboardError: false,
 };
 
 const Dashboard = (state = initialState, action) => {
@@ -28,6 +38,22 @@ const Dashboard = (state = initialState, action) => {
         getDetailDashboardResult: action.payload.data,
         getDetailDashboardLoading: action.payload.loading,
         getDetailDashboardError: action.payload.errorMessage,
+      };
+
+    case AddListDashboard:
+      return {
+        ...state,
+        AddListDashboardResult: action.payload.data,
+        AddListDashboardLoading: action.payload.loading,
+        AddListDashboardError: action.payload.errorMessage,
+      };
+
+    case DeleteListDashboard:
+      return {
+        ...state,
+        DeleteListDashboardResult: action.payload.data,
+        DeleteListDashboardLoading: action.payload.loading,
+        DeleteListDashboardError: action.payload.errorMessage,
       };
 
     default:

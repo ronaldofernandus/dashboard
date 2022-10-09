@@ -2,122 +2,46 @@ import React, { useState, useEffect } from "react";
 import "./Add.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { IoIosClose } from "react-icons/io";
+import Select from "react-select";
 
 import { useNavigate, useParams } from "react-router-dom";
 
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import Swal from "sweetalert2";
 
-import { BsDot } from "react-icons/bs";
-import { getListAllItem } from "../../Axios/ItemAxios";
+import { AddItem, getListAllItem } from "../../Axios/ItemAxios";
 const Add = () => {
-  const data = [
-    {
-      value: 1,
-      text: "Merah",
-      icon: (
-        <svg
-          width="14"
-          height="14"
-          viewBox="0 0 14 14"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <circle cx="7" cy="7" r="7" fill="#ED4C5C" />
-        </svg>
-      ),
-    },
-    {
-      value: 2,
-      text: "kuning",
-      icon: (
-        <svg
-          width="14"
-          height="14"
-          viewBox="0 0 14 14"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <circle cx="7" cy="7" r="7" fill="#F8A541" />
-        </svg>
-      ),
-    },
-    {
-      value: 3,
-      text: "Hijau",
-      icon: (
-        <svg
-          width="14"
-          height="14"
-          viewBox="0 0 14 14"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <circle cx="7" cy="7" r="7" fill="#00A790" />
-        </svg>
-      ),
-    },
-    {
-      value: 4,
-      text: "Biru",
-      icon: (
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          fill="currentColor"
-          class="bi bi-arrow-right-circle"
-          viewBox="0 0 16 16"
-        >
-          <path
-            fill-rule="evenodd"
-            d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"
-          />
-        </svg>
-      ),
-    },
-    {
-      value: 5,
-      text: "Ungu",
-      icon: (
-        <svg
-          width="14"
-          height="14"
-          viewBox="0 0 14 14"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <circle cx="7" cy="7" r="7" fill="#8942C1" />
-        </svg>
-      ),
-    },
-  ];
+  const [prod_title, setProd_title] = useState("");
+  const [prod_priority, setProd_priority] = useState("");
+  const { AddListItemResult } = useSelector((state) => state.itemReducers);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const addHandler = (event) => {
+    // console.log("1. Mulai");
+    dispatch(
+      AddItem({
+        prod_title: prod_title,
+        prod_priority: prod_priority,
+      })
+    );
+    Swal.fire({
+      icon: "success",
+      title: "Add Post Success!",
+      text: `You've successfully created an post!`,
+    });
+    navigate("/item");
+  };
+
+  useEffect(() => {
+    if (AddListItemResult) {
+      // console.log("5. Masukk Component did update");
+      dispatch(getListAllItem());
+    }
+  }, [AddListItemResult, dispatch]);
+
   return (
     <>
-      <style type="text/css">
-        {`
-    .btn-flat {
-      background-color: white;
-      position: absolute;
-      width: 205px;
-      height: 52px;
-      left: 30px;
-      top: 120px;
-
-    }
-
-    .btn-two {
-      position: absolute;
-      width: 205px;
-      height: 52px;
-      left: 30px;
-      top: 292px;
-      
-      background: #FFFFFF;
-      border: 1px solid #E5E5E5;
-    }
-    `}
-      </style>
       <div className="container">
         <div className="container">
           <div className="row">
@@ -197,6 +121,8 @@ const Add = () => {
                   Nama List Item
                 </h2>
                 <input
+                  value={prod_title}
+                  onChange={(e) => setProd_title(e.target.value)}
                   style={{
                     position: "absolute",
                     height: "52px",
@@ -235,6 +161,11 @@ const Add = () => {
                 </h2>
 
                 <select
+                  value={prod_priority}
+                  onChange={(e) => {
+                    const selectedPriority = e.target.value;
+                    setProd_priority(selectedPriority);
+                  }}
                   data-sty="Rectangle 606"
                   style={{
                     position: "absolute",
@@ -249,7 +180,6 @@ const Add = () => {
                   }}
                 >
                   <option
-                    options={data}
                     style={{
                       position: "absolute",
                       width: "205px",
@@ -260,19 +190,6 @@ const Add = () => {
                       background: "#F4F4F4",
                       border: "1px solid #E5E5E5",
                     }}
-                    getOptionLabel={(e) => (
-                      <div
-                        style={{
-                          position: "absolute",
-                          width: " 14px",
-                          height: "14px",
-                          left: "47px",
-                          top: "311px",
-                        }}
-                      >
-                        {e.icon}
-                      </div>
-                    )}
                   >
                     Very High
                   </option>
@@ -318,6 +235,20 @@ const Add = () => {
                   >
                     Low
                   </option>
+                  <option
+                    style={{
+                      position: "absolute",
+                      width: "205px",
+                      height: "52px",
+                      left: "30px",
+                      top: "292px",
+
+                      background: "#F4F4F4",
+                      border: "1px solid #E5E5E5",
+                    }}
+                  >
+                    Very Low
+                  </option>
                 </select>
               </div>
               <svg
@@ -331,6 +262,7 @@ const Add = () => {
               </svg>
               <div className="row">
                 <button
+                  onClick={() => addHandler()}
                   type="button"
                   className="btn btn-primary"
                   data-sty="modal-add-save-button"

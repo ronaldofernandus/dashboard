@@ -11,17 +11,17 @@ import { Link } from "react-router-dom";
 import {
   getListAllDashboard,
   getDetailDashboardById,
+  deleteDashboard,
 } from "../../Axios/dashboardAxios";
 // import ReactPaginate from "react-paginate";
-
+import Swal from "sweetalert2";
 const Dashboard = () => {
   const {
     getListDashboardResult,
     getListDashboardLoading,
     getListDashboardError,
+    DeleteListDashboardResult,
   } = useSelector((state) => state.dashboardReducers);
-
-  console.log(getListDashboardResult);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -33,6 +33,14 @@ const Dashboard = () => {
   useEffect(() => {
     dispatch(getListAllDashboard(+id));
   }, [dispatch]);
+
+  useEffect(() => {
+    if (DeleteListDashboardResult) {
+      // console.log("5. Masukk Component did update");
+      dispatch(getListAllDashboard());
+    }
+  }, [DeleteListDashboardResult, dispatch]);
+
   return (
     <>
       <div className="container">
@@ -130,8 +138,6 @@ const Dashboard = () => {
         <div className="row">
           {getListDashboardResult ? (
             getListDashboardResult.data.map((dashboard) => {
-              console.log(getListDashboardResult);
-              // console.log(getListJobsResult);
               return (
                 <>
                   <div className="col-3">
@@ -204,6 +210,9 @@ const Dashboard = () => {
 
                         <div className="col-4">
                           <BsTrash
+                            onClick={() =>
+                              dispatch(deleteDashboard(dashboard.id))
+                            }
                             style={{
                               display: "flex",
                               position: "absolute",

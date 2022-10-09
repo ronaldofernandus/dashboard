@@ -1,29 +1,64 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import { AiOutlinePlus } from "react-icons/ai";
-
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { HiOutlinePencil } from "react-icons/hi";
-
+import { useNavigate, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import Swal from "sweetalert2";
+import { AddDashboard, getListAllDashboard } from "../../Axios/dashboardAxios";
 const AddActivity = () => {
+  const [prod_title, setProd_title] = useState("");
+
+  const { AddListDashboardResult } = useSelector(
+    (state) => state.dashboardReducers
+  );
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const addHandler = (event) => {
+    // console.log("1. Mulai");
+    dispatch(
+      AddDashboard({
+        prod_title: prod_title,
+      })
+    );
+    Swal.fire({
+      icon: "success",
+      title: "Add Post Success!",
+      text: `You've successfully created an post!`,
+    });
+    navigate("/");
+  };
+
+  useEffect(() => {
+    if (AddListDashboardResult) {
+      // console.log("5. Masukk Component did update");
+      dispatch(getListAllDashboard());
+    }
+  }, [AddListDashboardResult, dispatch]);
+
   return (
     <>
       <div className="container">
         <div className="row">
           <div className="col-3" data-cy="todo-back-button">
-            <MdOutlineKeyboardArrowLeft
-              style={{
-                position: "absolute",
-                width: "32px",
-                height: "32px",
-                bottom: "500px",
-                left: "209px",
-                top: "159px",
-              }}
-              size="50px"
-              color="black"
-            />
+            <Link to={`/`}>
+              <MdOutlineKeyboardArrowLeft
+                style={{
+                  position: "absolute",
+                  width: "32px",
+                  height: "32px",
+                  bottom: "500px",
+                  left: "209px",
+                  top: "159px",
+                }}
+                size="50px"
+                color="black"
+              />
+            </Link>
           </div>
           <div className="col-3">
             <h1
@@ -237,6 +272,8 @@ const AddActivity = () => {
                   Nama Activity
                 </h2>
                 <input
+                  value={prod_title}
+                  onChange={(e) => setProd_title(e.target.value)}
                   style={{
                     position: "absolute",
                     height: "52px",
@@ -246,13 +283,14 @@ const AddActivity = () => {
                     border: "1px solid #16ABF8",
                     borderRadius: "6px",
                   }}
-                  type="email"
+                  type="text"
                   className="form-control"
                   id="exampleFormControlInput1"
                   placeholder="Tambahkan Activity"
                 />
 
                 <button
+                  onClick={() => addHandler()}
                   type="button"
                   className="btn btn-primary"
                   data-sty="modal-add-save-button"
