@@ -1,10 +1,97 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Add.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { IoIosClose } from "react-icons/io";
+
+import { useNavigate, useParams } from "react-router-dom";
+
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+
 import { BsDot } from "react-icons/bs";
-import Dropdown from "react-bootstrap/Dropdown";
+import { getListAllItem } from "../../Axios/ItemAxios";
 const Add = () => {
+  const data = [
+    {
+      value: 1,
+      text: "Merah",
+      icon: (
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 14 14"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle cx="7" cy="7" r="7" fill="#ED4C5C" />
+        </svg>
+      ),
+    },
+    {
+      value: 2,
+      text: "kuning",
+      icon: (
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 14 14"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle cx="7" cy="7" r="7" fill="#F8A541" />
+        </svg>
+      ),
+    },
+    {
+      value: 3,
+      text: "Hijau",
+      icon: (
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 14 14"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle cx="7" cy="7" r="7" fill="#00A790" />
+        </svg>
+      ),
+    },
+    {
+      value: 4,
+      text: "Biru",
+      icon: (
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="16"
+          height="16"
+          fill="currentColor"
+          class="bi bi-arrow-right-circle"
+          viewBox="0 0 16 16"
+        >
+          <path
+            fill-rule="evenodd"
+            d="M1 8a7 7 0 1 0 14 0A7 7 0 0 0 1 8zm15 0A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5H4.5z"
+          />
+        </svg>
+      ),
+    },
+    {
+      value: 5,
+      text: "Ungu",
+      icon: (
+        <svg
+          width="14"
+          height="14"
+          viewBox="0 0 14 14"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <circle cx="7" cy="7" r="7" fill="#8942C1" />
+        </svg>
+      ),
+    },
+  ];
   return (
     <>
       <style type="text/css">
@@ -146,27 +233,92 @@ const Add = () => {
                 >
                   Priority
                 </h2>
-                <Dropdown>
-                  <Dropdown.Toggle variant="flat" id="dropdown-basic">
-                    <Dropdown.Item
-                      href="#/action-1"
-                      variant="two"
-                    ></Dropdown.Item>
-                    Pilih Priority
-                  </Dropdown.Toggle>
 
-                  <Dropdown.Menu className="super-colors">
-                    <Dropdown.Item href="#/action-1" variant="two">
-                      Action
-                    </Dropdown.Item>
-                    <Dropdown.Item href="#/action-2">
-                      Another action
-                    </Dropdown.Item>
-                    <Dropdown.Item href="#/action-3">
-                      Something else
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
+                <select
+                  data-sty="Rectangle 606"
+                  style={{
+                    position: "absolute",
+                    width: "205px",
+                    height: "52px",
+                    left: "45px",
+                    top: "240px",
+
+                    background: "#F4F4F4",
+                    border: "1px solid #E5E5E5",
+                    borderRadius: "6px 6px 0px 0px",
+                  }}
+                >
+                  <option
+                    options={data}
+                    style={{
+                      position: "absolute",
+                      width: "205px",
+                      height: "52px",
+                      left: "30px",
+                      top: "292px",
+
+                      background: "#F4F4F4",
+                      border: "1px solid #E5E5E5",
+                    }}
+                    getOptionLabel={(e) => (
+                      <div
+                        style={{
+                          position: "absolute",
+                          width: " 14px",
+                          height: "14px",
+                          left: "47px",
+                          top: "311px",
+                        }}
+                      >
+                        {e.icon}
+                      </div>
+                    )}
+                  >
+                    Very High
+                  </option>
+                  <option
+                    style={{
+                      position: "absolute",
+                      width: "205px",
+                      height: "52px",
+                      left: "30px",
+                      top: "292px",
+
+                      background: "#F4F4F4",
+                      border: "1px solid #E5E5E5",
+                    }}
+                  >
+                    High
+                  </option>
+                  <option
+                    style={{
+                      position: "absolute",
+                      width: "205px",
+                      height: "52px",
+                      left: "30px",
+                      top: "292px",
+
+                      background: "#F4F4F4",
+                      border: "1px solid #E5E5E5",
+                    }}
+                  >
+                    Medium
+                  </option>
+                  <option
+                    style={{
+                      position: "absolute",
+                      width: "205px",
+                      height: "52px",
+                      left: "30px",
+                      top: "292px",
+
+                      background: "#F4F4F4",
+                      border: "1px solid #E5E5E5",
+                    }}
+                  >
+                    Low
+                  </option>
+                </select>
               </div>
               <svg
                 width="830"

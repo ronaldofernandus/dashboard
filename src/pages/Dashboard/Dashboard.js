@@ -1,9 +1,38 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./Dashboard.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { AiOutlinePlus } from "react-icons/ai";
 import { BsTrash } from "react-icons/bs";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+
+import {
+  getListAllDashboard,
+  getDetailDashboardById,
+} from "../../Axios/dashboardAxios";
+// import ReactPaginate from "react-paginate";
+
 const Dashboard = () => {
+  const {
+    getListDashboardResult,
+    getListDashboardLoading,
+    getListDashboardError,
+  } = useSelector((state) => state.dashboardReducers);
+
+  console.log(getListDashboardResult);
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { id } = useParams();
+  useEffect(() => {
+    dispatch(getListAllDashboard());
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(getListAllDashboard(+id));
+  }, [dispatch]);
   return (
     <>
       <div className="container">
@@ -32,7 +61,8 @@ const Dashboard = () => {
             </h1>
           </div>
           <div className="col-6">
-            <button
+            <Link
+              to="/AddActivity"
               style={{
                 display: "flex",
                 flexDirection: "row",
@@ -53,7 +83,7 @@ const Dashboard = () => {
                 color: "#111111",
               }}
               type="button"
-              class="btn btn-primary"
+              className="btn btn-primary"
               data-cy="activity-add-button"
             >
               <AiOutlinePlus
@@ -93,91 +123,111 @@ const Dashboard = () => {
                 {" "}
                 Tambah
               </h5>
-            </button>
+            </Link>
           </div>
         </div>
 
         <div className="row">
-          <div className="col-3">
-            <div
-              class="card"
-              style={{
-                height: "234px",
-                width: "235px",
-                left: "100px",
-                top: "170px",
-                background: "#FFFFFF",
-                boxShadow: " 0px 6px 10px rgba(0, 0, 0, 0.1)",
-                borderRadius: "12px",
-              }}
-            >
-              <div className="row">
-                <div className="col-4">
-                  <div class="card-body">
-                    <h1
-                      className="modal-add-title"
+          {getListDashboardResult ? (
+            getListDashboardResult.data.map((dashboard) => {
+              console.log(getListDashboardResult);
+              // console.log(getListJobsResult);
+              return (
+                <>
+                  <div className="col-3">
+                    <div
+                      className="card"
                       style={{
-                        position: "absolute",
-                        height: "27px",
-                        width: "159px",
-                        left: "30px",
-                        top: "24px",
-                        fontFamily: "Poppins",
-                        fontStyle: "normal",
-                        fontWeight: "600",
-                        fontSize: "18px",
-                        lineHeight: "27px",
-                        /* identical to box height */
-
-                        color: "#111111",
+                        height: "234px",
+                        width: "235px",
+                        left: "100px",
+                        top: "170px",
+                        background: "#FFFFFF",
+                        boxShadow: " 0px 6px 10px rgba(0, 0, 0, 0.1)",
+                        borderRadius: "12px",
                       }}
                     >
-                      Daftar Belanja Bulanan
-                    </h1>
+                      <div className="row">
+                        <div className="col-4">
+                          <div class="card-body">
+                            <Link
+                              to={`/item/detail/${dashboard.id}`}
+                              onClick={() =>
+                                dispatch(getDetailDashboardById(dashboard))
+                              }
+                              className="modal-add-title"
+                              style={{
+                                position: "absolute",
+                                height: "27px",
+                                width: "159px",
+                                left: "30px",
+                                top: "24px",
+                                fontFamily: "Poppins",
+                                fontStyle: "normal",
+                                fontWeight: "600",
+                                fontSize: "18px",
+                                lineHeight: "27px",
+                                /* identical to box height */
+
+                                color: "#111111",
+                              }}
+                            >
+                              {dashboard.title}
+                            </Link>
+                          </div>
+                        </div>
+
+                        <div className="col-4">
+                          <h2
+                            className="activity-item-date "
+                            style={{
+                              position: "absolute",
+                              height: "21px",
+                              width: "103 px",
+                              left: "35px",
+                              top: "200px",
+                              fontFamily: "Poppins",
+                              fontStyle: "normal",
+                              fontWeight: "500",
+                              fontSize: "14px",
+                              lineHeight: "21px",
+                              display: "flex",
+                              alignItems: "center",
+
+                              color: "#888888",
+                              /* identical to box height */
+                            }}
+                          >
+                            {dashboard.created_at}
+                          </h2>
+                        </div>
+
+                        <div className="col-4">
+                          <BsTrash
+                            style={{
+                              display: "flex",
+                              position: "absolute",
+                              width: "14px",
+                              height: " 14px",
+                              left: "200px",
+                              top: "200px",
+                            }}
+                            type="button"
+                          ></BsTrash>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-
-                <div className="col-4">
-                  <h2
-                    className="activity-item-date "
-                    style={{
-                      position: "absolute",
-                      height: "21px",
-                      width: "103px",
-                      left: "35px",
-                      top: "200px",
-                      fontFamily: "Poppins",
-                      fontStyle: "normal",
-                      fontWeight: "500",
-                      fontSize: "14px",
-                      lineHeight: "21px",
-                      display: "flex",
-                      alignItems: "center",
-
-                      color: "#888888",
-                      /* identical to box height */
-                    }}
-                  >
-                    1 october 2022
-                  </h2>
-                </div>
-
-                <div className="col-4">
-                  <BsTrash
-                    style={{
-                      display: "flex",
-                      position: "absolute",
-                      width: "14px",
-                      height: " 14px",
-                      left: "200px",
-                      top: "200px",
-                    }}
-                    type="button"
-                  ></BsTrash>
-                </div>
-              </div>
-            </div>
-          </div>
+                </>
+              );
+            })
+          ) : getListDashboardLoading ? (
+            <p>Loading...</p>
+          ) : (
+            <p>
+              {getListDashboardError ? getListDashboardError : "Data Kosong"}
+            </p>
+          )}
         </div>
       </div>
     </>
